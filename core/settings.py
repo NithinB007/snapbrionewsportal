@@ -96,7 +96,7 @@ DATABASES = {
     }
 }
 
-DATABASES['default'] = dj_database_url.parse("postgresql://snapbrionewsdb_user:IgGcJMVdRoFvHWo9XVL7kdss9o1Bf55X@dpg-d0s3iiqdbo4c73bb8jf0-a.singapore-postgres.render.com/snapbrionewsdb")
+DATABASES['default'] = dj_database_url.parse("postgresql://snapbrionewsdb_lrlx_user:nRKTe4v7mmMuy6JWaXtJuV8pwXVpYbFY@dpg-d0s4lcmmcj7s73f13sk0-a.singapore-postgres.render.com/snapbrionewsdb_lrlx")
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
