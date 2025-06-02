@@ -28,7 +28,7 @@
             <!-- feature_article_content -->
 
             <div class="article_social">
-                <span><a href="#" onclick="openShareModal('{{request.build_absolute_uri hot_news.get_absolute_url }}', '{{ hot_news.title|escapejs }}')">
+                <span><a href="#" onclick="openShareModal('{{request.build_absolute_uri:hot_news.get_absolute_url }}', '{{ hot_news.title|escapejs }}')">
                     <i class="fa fa-share-alt"></i> 529 Share
                 </a>
                 </span>
