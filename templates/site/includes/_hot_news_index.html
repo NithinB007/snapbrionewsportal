@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load mainsite_extras %}
 <div class="col-md-7">
     <div class="feature_article_wrapper">
         <div class="feature_article_img">
@@ -28,7 +28,7 @@
             <!-- feature_article_content -->
 
             <div class="article_social">
-                <span><a href="#" onclick="openShareModal('{{request.build_absolute_uri(hot_news.get_absolute_url) }}', '{{ hot_news.title|escapejs }}')">
+                <span><a href="#" onclick="openShareModal('{{hot_news.get_absolute_url|absolute_url:request }}', '{{ hot_news.title|escapejs }}')">
                     <i class="fa fa-share-alt"></i> 529 Share
                 </a>
                 </span>
