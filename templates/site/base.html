@@ -42,15 +42,20 @@ background:rgba(0,0,0,0.5); z-index:999;" onclick="closeShareModal()"></div>
 <script>
     let currentArticleUrl = '';
     let currentArticleTitle = '';
+
+    // Define your base URL here. This will be prepended to relative paths.
+    const BASE_URL = "https://snapbrionews.onrender.com"; 
     
     function openShareModal(url, title) {
-        currentArticleUrl = url;
+        // Prepend the base URL to the relative URL received from Django
+        currentArticleUrl = BASE_URL + url; 
         currentArticleTitle = title;
     
-        document.getElementById("fb-share").href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-        document.getElementById("twitter-share").href = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
-        document.getElementById("linkedin-share").href = `https://www.linkedin.com/shareArticle?url=${url}&title=${title}`;
-        document.getElementById("email-share").href = `mailto:?subject=${title}&body=${url}`;
+        // Update the share links using the now complete 'currentArticleUrl'
+        document.getElementById("fb-share").href = `https://www.facebook.com/sharer/sharer.php?u=${currentArticleUrl}`;
+        document.getElementById("twitter-share").href = `https://twitter.com/intent/tweet?url=${currentArticleUrl}&text=${currentArticleTitle}`;
+        document.getElementById("linkedin-share").href = `https://www.linkedin.com/shareArticle?url=${currentArticleUrl}&title=${currentArticleTitle}`;
+        document.getElementById("email-share").href = `mailto:?subject=${currentArticleTitle}&body=${currentArticleUrl}`;
     
         document.getElementById("shareModal").style.display = "block";
         document.getElementById("modalOverlay").style.display = "block";
@@ -62,12 +67,53 @@ background:rgba(0,0,0,0.5); z-index:999;" onclick="closeShareModal()"></div>
     }
     
     function copyToClipboard() {
-        navigator.clipboard.writeText(currentArticleUrl).then(function () {
-            alert('Link copied to clipboard!');
-        }, function () {
-            alert('Failed to copy the link.');
+        // Use the already constructed currentArticleUrl for copying
+        document.execCommand('copy').then(function () { // Using document.execCommand for broader iframe compatibility
+            // Instead of alert, use a simple message box or visual feedback
+            const messageBox = document.createElement('div');
+            messageBox.textContent = 'Link copied to clipboard!';
+            messageBox.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #4CAF50;
+                color: white;
+                padding: 15px;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                font-family: 'Inter', sans-serif;
+                font-size: 16px;
+            `;
+            document.body.appendChild(messageBox);
+            setTimeout(() => {
+                document.body.removeChild(messageBox);
+            }, 2000); // Remove after 2 seconds
+        }).catch(function (err) {
+            const messageBox = document.createElement('div');
+            messageBox.textContent = 'Failed to copy the link. Please copy manually.';
+            messageBox.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #f44336;
+                color: white;
+                padding: 15px;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                font-family: 'Inter', sans-serif;
+                font-size: 16px;
+            `;
+            document.body.appendChild(messageBox);
+            setTimeout(() => {
+                document.body.removeChild(messageBox);
+            }, 3000); // Remove after 3 seconds
+            console.error('Could not copy text: ', err);
         });
     }
-    </script>
+</script>
     
 </html>
